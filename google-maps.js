@@ -361,8 +361,8 @@ var g_new_map = null;
     }
     else {
       // fit to bounds
-      //map.fitBounds(bounds); //set the zoom to fit all bounds
-      map.panToBounds(bounds); //set the center to fit all bounds
+      map.fitBounds(bounds); //set the zoom to fit all bounds
+      //map.panToBounds(bounds); //set the center to fit all bounds
     }
 
   }
