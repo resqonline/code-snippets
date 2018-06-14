@@ -124,30 +124,23 @@ var g_new_map = null;
       strokeWeight: '1px',
     });
 
+    // Spiderfier
+    var omsOptions = { markersWontMove: true, markersWontHide: true, keepSpiderfied: true, ignoreMapClick: true, legWeight: 2, circleFootSeparation: 60, spiralFootSeparation: 50, spiralLengthStart: 20, spiralLengthFactor: 8, };
+    var oms = new OverlappingMarkerSpiderfier(map, omsOptions);
+
     // add a markers reference
-    markers = [];
+    map.markers = [];
 
     // add markers
     $markers.each(function () {
 
-      add_marker($(this), map);
+      add_marker($(this), map, oms, map.markers);
 
     });
 
     // add cluster
     var mcOptions = {gridSize: 30, maxZoom: 15, imagePath: pluginDirURI + 'includes/images/m'};
-    var markerCluster = new MarkerClusterer(map, markers, mcOptions);
-
-    // Spiderfier
-    var oms = new OverlappingMarkerSpiderfier(map, { markersWontMove: true, markersWontHide: true, keepSpiderfied: true, legWeight: 2, circleFootSeparation: 50});
-
-    function omsMarkers( markers ) {
-      for ( var i = 0; i < markers.length; i++ ) {
-        oms.addMarker( markers[i] );
-      }
-    }
-
-    omsMarkers(markers);
+    var markerCluster = new MarkerClusterer(map, map.markers, mcOptions);
 
     // center map
     center_map(map);
@@ -173,7 +166,7 @@ var g_new_map = null;
   *  @return  n/a
   */
 
-  function add_marker($marker, map) {
+  function add_marker($marker, map, oms, markers) {
 
     // var
     var latlng = new google.maps.LatLng($marker.attr('data-lat'), $marker.attr('data-lng'));
@@ -207,6 +200,8 @@ var g_new_map = null;
 
     // add to array
     markers.push(marker);
+
+    oms.addMarker(marker);
 
     // if marker contains HTML, add it to an infoWindow
     if ($marker.html()) {
