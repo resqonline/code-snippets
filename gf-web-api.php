@@ -10,7 +10,7 @@ function get_rp_gf_entries(){
 
 	$base_url = get_field('url_rp', 'options');
 	$api_key = get_field('gf_api_key', 'options');
-	$private_key = get_field('gf_private_key');
+	$private_key = get_field('gf_private_key', 'options');
 
 	$method  = 'GET';
 	$route = 'forms';
